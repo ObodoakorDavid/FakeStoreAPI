@@ -10,8 +10,9 @@ const Section1 = ({ products, fetched, loading }) => {
       {fetched && (
         <div>
           {products.map((product) => {
+            const {id, title} = product
             return (
-              <div>
+              <div key={id}>
                 <p>{product.title}</p>
               </div>
             );
