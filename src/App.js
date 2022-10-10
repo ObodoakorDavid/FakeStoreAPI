@@ -1,6 +1,7 @@
 /** @format */
 
 import logo from "./logo.svg";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useReducer, useEffect } from "react";
 import Navbarr from "./Components/Navbarr";
@@ -10,12 +11,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH":
       return { ...state, data: action.payload, fetched: true, loading: false };
-      break;
-    case "TEST":
-      return { ...state, data: [10] };
+    case "ADD TO CART":
+      return { ...state, cart: action.payload };
     default:
       return state;
-      break;
   }
 };
 
@@ -24,6 +23,7 @@ function App() {
     loading: true,
     fetched: false,
     data: [],
+    cart: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -40,15 +40,20 @@ function App() {
   useEffect(() => {
     getData();
   }, []);
-  
+
+  const addToCart = (product) => {
+    dispatch({ type: "ADD TO CART", payload: product });
+  };
+
   console.log(state.data);
   return (
     <div className="App">
-      <Navbarr />
+      <Navbarr cart={state.cart} />
       <Section1
         products={state.data}
         loading={state.loading}
         fetched={state.fetched}
+        addToCart={addToCart}
       />
     </div>
   );
