@@ -16,6 +16,7 @@ const Section1 = ({ products, fetched, loading, addToCart }) => {
                 <button
                   onClick={() => {
                     addToCart(product);
+                    console.log(product);
                   }}
                 >
                   Add to cart

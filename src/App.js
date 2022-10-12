@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case "FETCH":
       return { ...state, data: action.payload, fetched: true, loading: false };
     case "ADD TO CART":
-      return { ...state, cart: action.payload };
+      return { ...state, cart: [...state.cart, action.payload] };
     default:
       return state;
   }
@@ -29,23 +29,20 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const getData = async () => {
-    console.log(state.loading);
-    console.log(state.fetched);
     let res = await fetch("https://fakestoreapi.com/products");
     let data = await res.json();
     dispatch({ type: "FETCH", payload: data });
-
-    // console.log(data);
   };
+
   useEffect(() => {
     getData();
   }, []);
 
   const addToCart = (product) => {
     dispatch({ type: "ADD TO CART", payload: product });
+    console.log(state.cart);
   };
 
-  console.log(state.data);
   return (
     <div className="App">
       <Navbarr cart={state.cart} />
