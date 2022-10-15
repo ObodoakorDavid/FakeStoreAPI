@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useReducer, useEffect } from "react";
 import Navbarr from "./Components/Navbarr";
-import Section1 from "./Components/Section1";
+import Store from "./Components/Store";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <Navbarr cart={state.cart} />
-      <Section1
+      <Store
         products={state.data}
         loading={state.loading}
         fetched={state.fetched}

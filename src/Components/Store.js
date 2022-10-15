@@ -1,17 +1,18 @@
 /** @format */
 
 import React from "react";
+import "./Store.css";
 
 const Section1 = ({ products, fetched, loading, addToCart }) => {
   return (
     <div>
       {loading && <div>Loading</div>}{" "}
       {fetched && (
-        <div>
+        <div className="products">
           {products.map((product) => {
             const { id, title } = product;
             return (
-              <div key={id}>
+              <div key={id} className="product">
                 <p>{product.title}</p>
                 <button
                   onClick={() => {

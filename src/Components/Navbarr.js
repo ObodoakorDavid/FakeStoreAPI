@@ -6,11 +6,10 @@ import React from "react";
 
 const Navbarr = ({ cart }) => {
   return (
-    <div>
+    <div className="nav-bar">
+      <p>David's Store</p>
       <div>
-        <FiShoppingCart /> <p>
-          cart: {cart.length}
-        </p>
+        <FiShoppingCart className="cart-icon" /> <small>{cart.length}</small>
       </div>
     </div>
   );
