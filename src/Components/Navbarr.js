@@ -11,9 +11,12 @@ const Navbarr = ({ cart }) => {
       <Link to="/">
         <p>David's Store</p>
       </Link>
-      <div>
-        <FiShoppingCart className="cart-icon" /> <small>{cart.length}</small>
-      </div>
+
+      <Link to="/cart">
+        <div>
+          <FiShoppingCart className="cart-icon" /> <small>{cart.length}</small>
+        </div>
+      </Link>
     </div>
   );
 };

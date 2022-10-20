@@ -3,8 +3,11 @@
 import React from "react";
 import "./Store.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Section1 = ({ products, fetched, loading, addToCart }) => {
+  const [xx, setxx] = useState(false);
+
   return (
     <div>
       {loading && <div>Loading</div>}{" "}
@@ -20,10 +23,11 @@ const Section1 = ({ products, fetched, loading, addToCart }) => {
                   <p>${product.price}</p>
                   <p>{product.description.slice(0, 40)}...</p>
                 </Link>
+
                 <button
                   onClick={() => {
                     addToCart(product);
-                    console.log(product);
+                    // console.log(product);
                   }}
                 >
                   Add to cart
