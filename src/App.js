@@ -6,6 +6,8 @@ import "./App.css";
 import { useReducer, useEffect } from "react";
 import Navbarr from "./Components/Navbarr";
 import Store from "./Components/Store";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Product from "./Components/Product";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -13,6 +15,8 @@ const reducer = (state, action) => {
       return { ...state, data: action.payload, fetched: true, loading: false };
     case "ADD TO CART":
       return { ...state, cart: [...state.cart, action.payload] };
+    case "FETCH PRODUCT":
+      return { ...state, productFetching: true, productData: action.payload };
     default:
       return state;
   }
@@ -24,6 +28,8 @@ function App() {
     fetched: false,
     data: [],
     cart: [],
+    productData: {},
+    productFetching: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -32,6 +38,14 @@ function App() {
     let res = await fetch("https://fakestoreapi.com/products");
     let data = await res.json();
     dispatch({ type: "FETCH", payload: data });
+    console.log(data);
+  };
+
+  const getProduct = async (id) => {
+    let res = await fetch(`https://fakestoreapi.com/products/${id}`);
+    let data = await res.json();
+    dispatch({ type: "FETCH PRODUCT", payload: data });
+    console.log(data);
   };
 
   useEffect(() => {
@@ -45,13 +59,32 @@ function App() {
 
   return (
     <div className="App">
-      <Navbarr cart={state.cart} />
-      <Store
-        products={state.data}
-        loading={state.loading}
-        fetched={state.fetched}
-        addToCart={addToCart}
-      />
+      <BrowserRouter>
+        <Navbarr cart={state.cart} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Store
+                products={state.data}
+                loading={state.loading}
+                fetched={state.fetched}
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="products/:id"
+            element={
+              <Product
+                fetching={state.productFetching}
+                getProduct={getProduct}
+                product={state.productData}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

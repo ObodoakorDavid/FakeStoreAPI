@@ -2,22 +2,49 @@
 
 .products {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 10px;
+  padding: 20px;
 }
 
 .product {
-  border: 1px solid red;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 8px;
+  text-align: left;
+  background-color: white;
+  box-shadow: 8px 6px 3px whitesmoke;
 }
 
-.product > button {
+.product button {
+  margin-top: 10px;
   border: none;
   padding: 8px 16px;
   border-radius: 5px;
-  background-color: green;
+  background-color: black;
   color: white;
+  width: 100%;
+}
+
+.product p:nth-of-type(1) {
+  font-weight: bold;
+}
+
+.product p {
+  margin-bottom: 5px;
+}
+
+.product a {
+  text-decoration: none;
+  color: black;
+}
+
+.product img {
+  width: 100%;
+  height: 300px;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  padding: 10px;
+  mix-blend-mode: darken;
 }
 
 .nav-bar {
@@ -36,14 +63,20 @@
   margin: 0;
 }
 
+.nav-bar a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
 .nav-bar div small {
   position: absolute;
   top: -30%;
   right: -30%;
-  background-color: green;
+  background-color: black;
   padding: 0 5px;
   border-radius: 20px;
-  color: black;
+  color: white;
   font-weight: bold;
   font-size: small;
 }
@@ -51,4 +84,10 @@
 .cart-icon {
   font-size: x-large;
   position: relative;
+}
+
+@media (min-width: 768px) {
+  .products {
+    grid-template-columns: 1fr 1fr;
+  }
 }

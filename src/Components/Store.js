@@ -2,6 +2,7 @@
 
 import React from "react";
 import "./Store.css";
+import { Link } from "react-router-dom";
 
 const Section1 = ({ products, fetched, loading, addToCart }) => {
   return (
@@ -13,7 +14,12 @@ const Section1 = ({ products, fetched, loading, addToCart }) => {
             const { id, title } = product;
             return (
               <div key={id} className="product">
-                <p>{product.title}</p>
+                <Link to={`/products/${id}`}>
+                  <img src={product.image} alt="" />
+                  <p>{product.title}</p>
+                  <p>${product.price}</p>
+                  <p>{product.description.slice(0, 40)}...</p>
+                </Link>
                 <button
                   onClick={() => {
                     addToCart(product);
