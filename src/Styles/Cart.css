@@ -1,0 +1,19 @@
+.cart-items {
+    max-width: 425px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10%;
+    text-align: left;
+    padding: 10px 20px;
+}
+
+.cart-items img {
+    width: 30%;
+}
+
+.cart-items > div > div  {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}

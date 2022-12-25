@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import "./Store.css";
+import "../Styles/Store.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ const Section1 = ({ products, fetched, loading, addToCart }) => {
               <div key={id} className="product">
                 <Link to={`/products/${id}`}>
                   <img src={product.image} alt="" />
-                  <p>{product.title}</p>
+                  <p>{product.title.slice(0, 25)}...</p>
                   <p>${product.price}</p>
                   <p>{product.description.slice(0, 40)}...</p>
                 </Link>

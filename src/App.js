@@ -15,11 +15,8 @@ const reducer = (state, action) => {
     case "FETCH":
       return { ...state, data: action.payload, fetched: true, loading: false };
     case "ADD TO CART":
-      console.log(action.payload);
-      const tempState = state.cart.filter(
-        (item) => item.id === action.payload.id
-      );
-      if (tempState.length > 0) {
+      const tempState = state.cart.find((item) => item.id == action.payload.id);
+      if (tempState) {
         return state;
       } else {
         return {
@@ -37,9 +34,6 @@ const reducer = (state, action) => {
           return item;
         }
       });
-
-      console.log(tempState1);
-
       return { ...state, cart: tempState1 };
     case "DECREASE":
       const tempState2 = state.cart.map((item) => {
@@ -49,16 +43,14 @@ const reducer = (state, action) => {
           return item;
         }
       });
-
-      console.log(tempState2);
-
       return { ...state, cart: tempState2 };
     case "REMOVE":
       const newState = state.cart.filter(
         (item) => item.id !== action.payload.id
       );
-
       return { ...state, cart: newState };
+    case "UpdateCartFromLC":
+      return { ...state, cart: action.payload };
     default:
       return state;
   }
@@ -80,22 +72,35 @@ function App() {
     let res = await fetch("https://fakestoreapi.com/products");
     let data = await res.json();
     dispatch({ type: "FETCH", payload: data });
-    // console.log(data);
   };
 
   const getProduct = async (id) => {
     let res = await fetch(`https://fakestoreapi.com/products/${id}`);
     let data = await res.json();
     dispatch({ type: "FETCH PRODUCT", payload: data });
-    // console.log(data);
+  };
+
+  const setLocalStorage = () => {
+    localStorage.setItem("userCart", JSON.stringify(state.cart));
   };
 
   useEffect(() => {
+    if (localStorage.getItem("userCart")) {
+      dispatch({
+        type: "UpdateCartFromLC",
+        payload: JSON.parse(localStorage.getItem("userCart")),
+      });
+    }
     getData();
   }, []);
 
+  useEffect(() => {
+    setLocalStorage();
+  }, [state.cart]);
+
   const addToCart = (product) => {
     dispatch({ type: "ADD TO CART", payload: product });
+    setLocalStorage(state.cart);
   };
   const increaseQuantity = (product) => {
     dispatch({ type: "INCREASE", payload: product });

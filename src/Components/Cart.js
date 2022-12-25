@@ -1,6 +1,7 @@
 /** @format */
 
 import React from "react";
+import "../Styles/Cart.css";
 
 const Cart = ({ cart, increaseQuantity, decreaseQuantity, remove }) => {
   //   console.log(increaseQuantity);
@@ -8,32 +9,37 @@ const Cart = ({ cart, increaseQuantity, decreaseQuantity, remove }) => {
     <div>
       {cart.map((eachItem) => {
         return (
-          <div key={eachItem.id}>
-            <p>{eachItem.title}</p>
-            <p>{eachItem.quantity}</p>
-            <button
-              onClick={() => {
-                eachItem.quantity < 2
-                  ? remove(eachItem)
-                  : decreaseQuantity(eachItem);
-              }}
-            >
-              -
-            </button>{" "}
-            <button
-              onClick={() => {
-                increaseQuantity(eachItem);
-              }}
-            >
-              +
-            </button>
-            <p
-              onClick={() => {
-                remove(eachItem);
-              }}
-            >
-              x
-            </p>
+          <div className="cart-items" key={eachItem.id}>
+            <img src={eachItem.image} alt="" />
+            <div>
+              <p>{eachItem.title}</p>
+              <div>
+                <button
+                  onClick={() => {
+                    eachItem.quantity < 2
+                      ? remove(eachItem)
+                      : decreaseQuantity(eachItem);
+                  }}
+                >
+                  -
+                </button>
+                <p>{eachItem.quantity}</p>
+                <button
+                  onClick={() => {
+                    increaseQuantity(eachItem);
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <p
+                onClick={() => {
+                  remove(eachItem);
+                }}
+              >
+                x
+              </p>
+            </div>
           </div>
         );
       })}

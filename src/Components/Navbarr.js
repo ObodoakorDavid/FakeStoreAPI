@@ -12,6 +12,8 @@ const Navbarr = ({ cart }) => {
         <p>David's Store</p>
       </Link>
 
+      {/* <input type="text" /> */}
+
       <Link to="/cart">
         <div>
           <FiShoppingCart className="cart-icon" /> <small>{cart.length}</small>

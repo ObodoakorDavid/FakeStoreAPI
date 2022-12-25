@@ -3,6 +3,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import "../Styles/EachProduct.css";
 
 const Product = ({ getProduct, fetching, product, addToCart }) => {
   const { id } = useParams();
@@ -17,17 +18,19 @@ const Product = ({ getProduct, fetching, product, addToCart }) => {
       {fetching && (
         <div className="eachProduct" key={product.id}>
           <img src={product.image} alt="" />
-          <p>{product.title}</p>
-          <p>${product.price}</p>
-          <small>{product.description}</small>
-          <button
-            onClick={() => {
-              addToCart(product);
-              console.log(product);
-            }}
-          >
-            Add to cart
-          </button>
+          <div>
+            <p>{product.title}</p>
+            <p>${product.price}</p>
+            <small>{product.description}</small>
+            <button
+              onClick={() => {
+                addToCart(product);
+                console.log(product);
+              }}
+            >
+              Add to cart
+            </button>
+          </div>
         </div>
       )}
     </div>
