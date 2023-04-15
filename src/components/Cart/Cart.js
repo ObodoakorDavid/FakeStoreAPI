@@ -1,13 +1,16 @@
 /** @format */
 
-import React from "react";
-import "../Styles/Cart.css";
+import React, { useContext } from "react";
+import StoreContext from "../../context/StoreContext";
+import "./Cart.css";
 
-const Cart = ({ cart, increaseQuantity, decreaseQuantity, remove }) => {
+const Cart = () => {
   //   console.log(increaseQuantity);
+  const { state, decreaseQuantity, increaseQuantity, remove } =
+    useContext(StoreContext);
   return (
     <div>
-      {cart.map((eachItem) => {
+      {state.cart.map((eachItem) => {
         return (
           <div className="cart-items" key={eachItem.id}>
             <img src={eachItem.image} alt="" />

@@ -1,0 +1,38 @@
+/** @format */
+
+.eachProduct {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 8px 6px 3px whitesmoke;
+  }
+  .eachProduct img {
+    width: 100%;
+    height: 300px;
+    padding: 20px;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    mix-blend-mode: darken;
+    margin-bottom: 10px;
+  }
+  
+  .eachProduct p:nth-of-type(1) {
+    font-weight: bold;
+  }
+  
+  @media (min-width: 768px) {
+    .eachProduct {
+      display: flex;
+      gap: 5%;
+      max-width: 700px;
+      text-align: left;
+    }
+  
+    .eachProduct img {
+      width: 300px;
+    }
+  }
+  
