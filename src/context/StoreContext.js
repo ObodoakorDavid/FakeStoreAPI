@@ -8,8 +8,8 @@ export default StoreContext;
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH":
-      return { ...state, data: action.payload, fetched: true, loading: false };
+    case "FETCH All PRODUCTS":
+      return { ...state, allProducts: action.payload };
     case "ADD TO CART":
       const tempState = state.cart.find((item) => item.id == action.payload.id);
       if (tempState) {
@@ -20,31 +20,31 @@ const reducer = (state, action) => {
           cart: [...state.cart, { ...action.payload, quantity: 1 }],
         };
       }
-    case "FETCH PRODUCT":
-      return { ...state, productFetching: true, productData: action.payload };
+    case "FETCH SINGLE PRODUCT":
+      return { ...state, singleProduct: action.payload };
     case "INCREASE":
-      const tempState1 = state.cart.map((item) => {
+      const newCart = state.cart.map((item) => {
         if (item.id === action.payload.id) {
           return { ...item, quantity: item.quantity + 1 };
         } else {
           return item;
         }
       });
-      return { ...state, cart: tempState1 };
+      return { ...state, cart: newCart };
     case "DECREASE":
-      const tempState2 = state.cart.map((item) => {
+      const newCart2 = state.cart.map((item) => {
         if (item.id === action.payload.id) {
           return { ...item, quantity: item.quantity - 1 };
         } else {
           return item;
         }
       });
-      return { ...state, cart: tempState2 };
+      return { ...state, cart: newCart2 };
     case "REMOVE":
-      const newState = state.cart.filter(
+      const newCart3 = state.cart.filter(
         (item) => item.id !== action.payload.id
       );
-      return { ...state, cart: newState };
+      return { ...state, cart: newCart3 };
     case "UpdateCartFromLC":
       return { ...state, cart: action.payload };
     default:
@@ -53,27 +53,24 @@ const reducer = (state, action) => {
 };
 
 const initialState = {
-  loading: true,
-  fetched: false,
-  data: [],
+  allProducts: [],
   cart: [],
-  productData: {},
-  productFetching: false,
+  singleProduct: {},
 };
 
 export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const getData = async () => {
-    let res = await fetch("https://fakestoreapi.com/products");
-    let data = await res.json();
-    dispatch({ type: "FETCH", payload: data });
-  };
+  // const getData = async () => {
+  //   let res = await fetch("https://fakestoreapi.com/products");
+  //   let data = await res.json();
+  //   dispatch({ type: "FETCH All PRODUCTS", payload: data });
+  // };
 
   const getProduct = async (id) => {
     let res = await fetch(`https://fakestoreapi.com/products/${id}`);
     let data = await res.json();
-    dispatch({ type: "FETCH PRODUCT", payload: data });
+    dispatch({ type: "FETCH SINGLE PRODUCT", payload: data });
   };
 
   const setLocalStorage = () => {
@@ -88,7 +85,9 @@ export const StoreProvider = ({ children }) => {
         payload: JSON.parse(localStorage.getItem("userCart")),
       });
     }
-    getData();
+    // setTimeout(() => {
+    //   getData();
+    // }, 3000);
   }, []);
 
   // useEffect(() => {
@@ -116,6 +115,7 @@ export const StoreProvider = ({ children }) => {
     increaseQuantity,
     decreaseQuantity,
     remove,
+    dispatch,
   };
 
   return (

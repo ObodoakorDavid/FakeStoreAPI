@@ -1,23 +1,27 @@
 /** @format */
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StoreContext from "../../context/StoreContext";
 import { useParams } from "react-router-dom";
 import "./Product.css";
+import Loading from "../../utils/Loading";
 
 const Product = () => {
   const { id } = useParams();
   const { state, addToCart, getProduct } = useContext(StoreContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getProduct(id);
-    // console.log(product);
-    console.log(state.fetching);
-  }, []);
+    setLoading(true);
+    setTimeout(() => {
+      getProduct(id);
+      setLoading(false);
+    }, 3000);
+  }, [id]);
   return (
     <div>
-      {!state.productFetching && <div>Loading</div>}
-      {state.productFetching && (
+      {loading && <Loading loading={loading} />}
+      {!loading && (
         <div className="eachProduct" key={state.productData.id}>
           <img src={state.productData.image} alt="" />
           <div>
